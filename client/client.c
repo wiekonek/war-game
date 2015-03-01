@@ -2,6 +2,7 @@
 
 void on_window_game_destroy (GtkWidget *object, gpointer user_data) {
     gtk_main_quit();
+    gtk_widget_destroy(user_data);
 }
 
 int client_run(GtkBuilder *builder) {
@@ -19,7 +20,7 @@ int client_run(GtkBuilder *builder) {
 //    wind.button_exit = GTK_BUTTON (gtk_builder_get_object (builder, "window_button_exit"));
 
     gtk_builder_connect_signals( builder, &wind );
-    g_signal_connect (game, "destroy", G_CALLBACK (on_window_game_destroy), NULL);
+    g_signal_connect (game, "destroy", G_CALLBACK (on_window_game_destroy), game);
 
     gtk_widget_show (game);       
     gtk_main ();

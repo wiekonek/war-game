@@ -20,10 +20,12 @@ int main (int argc, char *argv[]) {
     int ret;
     ret = start_run(builder);
     if (ret == 1) {
-        ret == loading_run(builder);
+        ret = loading_run(builder);
         if(ret == 1)
             client_run(builder);
     }
+    
+    g_object_unref(G_OBJECT(builder));
         
     return 0;
 }
