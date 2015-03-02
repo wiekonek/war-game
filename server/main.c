@@ -40,9 +40,9 @@ int main(int argc, char** argv) {
     printf("Zaczynamy grę.");
     msgctl(id_queue, IPC_RMID, NULL);
     
-    int shmid = 0;
-    shmid = shmget ( SHMEM_KEY, 100, IPC_CREAT | 0666);
     
+    int shmid = 0;
+    shmid = shmget ( SHMEM_KEY, sizeof(Data), IPC_CREAT | 0666);
     pid_t pID;
     
     pID = fork();

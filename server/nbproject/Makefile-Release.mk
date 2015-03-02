@@ -37,8 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/communication.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/mechanics.o \
-	${OBJECTDIR}/shm.o
+	${OBJECTDIR}/mechanics.o
 
 
 # C Compiler Flags
@@ -79,11 +78,6 @@ ${OBJECTDIR}/mechanics.o: mechanics.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mechanics.o mechanics.c
-
-${OBJECTDIR}/shm.o: shm.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/shm.o shm.c
 
 # Subprojects
 .build-subprojects:

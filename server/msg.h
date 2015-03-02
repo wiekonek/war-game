@@ -4,8 +4,8 @@
 #define KEY_ID 66
 
 typedef struct msginitbuf {
-long mtype;//przydzielenie IP - 1, nowi gracze - 2
-int id;
+long mtype;     // player number
+int id;         // 1 - war, 2 - exit
 } ID_msg;
 
 typedef struct msgplayerbufbuf {

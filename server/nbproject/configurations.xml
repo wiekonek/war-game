@@ -19,7 +19,6 @@
       <itemPath>communication.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>mechanics.c</itemPath>
-      <itemPath>shm.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -65,8 +64,6 @@
       </item>
       <item path="msg.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="shm.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="shm.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
@@ -101,8 +98,6 @@
       <item path="mechanics.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="msg.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="shm.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="shm.h" ex="false" tool="3" flavor2="0">
       </item>
