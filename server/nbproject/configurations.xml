@@ -4,6 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>communication.h</itemPath>
+      <itemPath>mechanics.h</itemPath>
+      <itemPath>msg.h</itemPath>
+      <itemPath>shm.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -12,7 +16,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>communication.c</itemPath>
       <itemPath>main.c</itemPath>
+      <itemPath>mechanics.c</itemPath>
+      <itemPath>shm.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -35,8 +42,32 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/sys/types.h</pElem>
+          </incDir>
+        </cTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/include/sys</pElem>
+          </linkerAddLib>
+        </linkerTool>
       </compileType>
+      <item path="communication.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="communication.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="mechanics.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="mechanics.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="msg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="shm.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="shm.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -59,7 +90,21 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="communication.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="communication.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="mechanics.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="mechanics.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="msg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="shm.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="shm.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -5,7 +5,7 @@ void on_window_game_destroy (GtkWidget *object, gpointer user_data) {
     gtk_widget_destroy(user_data);
 }
 
-int client_run(GtkBuilder *builder) {
+int client_run(GtkBuilder *builder, int id) {
 
     GtkWidget *game;
     ClientWindow wind;

@@ -164,6 +164,50 @@
           </packing>
         </child>
         <child>
+          <object class="GtkStatusbar" id="statusbar2">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <property name="margin_left">10</property>
+            <property name="margin_right">10</property>
+            <property name="margin_start">10</property>
+            <property name="margin_end">10</property>
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel" id="label21">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Twoje ID:</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_id">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">0</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkGrid" id="grid2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -409,7 +453,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label34">
+                  <object class="GtkLabel" id="label_rec1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">0</property>
@@ -420,7 +464,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label35">
+                  <object class="GtkLabel" id="label_rec2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">0</property>
@@ -431,7 +475,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label36">
+                  <object class="GtkLabel" id="label_rec3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">0</property>
@@ -442,7 +486,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label37">
+                  <object class="GtkLabel" id="label_rec4">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">0</property>
@@ -464,7 +508,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button1">
+                  <object class="GtkButton" id="button_rec1">
                     <property name="label" translatable="yes">Robotnicy</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
@@ -477,7 +521,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button2">
+                  <object class="GtkButton" id="button_rec2">
                     <property name="label" translatable="yes">Lekka piechota</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
@@ -490,7 +534,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button3">
+                  <object class="GtkButton" id="button_rec3">
                     <property name="label" translatable="yes">Ciężka piechota</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
@@ -504,7 +548,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button4">
+                  <object class="GtkButton" id="button_rec4">
                     <property name="label" translatable="yes">Jazda</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
@@ -537,7 +581,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -550,7 +594,7 @@
             <property name="spacing">30</property>
             <property name="layout_style">start</property>
             <child>
-              <object class="GtkButton" id="button5">
+              <object class="GtkButton" id="button_attack">
                 <property name="label" translatable="yes">Atakuj</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -563,7 +607,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button6">
+              <object class="GtkButton" id="button_exit">
                 <property name="label" translatable="yes">Poddaj się</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -579,7 +623,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>
@@ -597,12 +641,15 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel" id="label_start1">
+          <object class="GtkLabel" id="label_loading">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_left">50</property>
+            <property name="margin_right">50</property>
             <property name="margin_top">50</property>
             <property name="margin_bottom">10</property>
             <property name="label" translatable="yes">Oczekiwanie na serwer</property>
+            <signal name="event" handler="on_label_loading_event" object="spinner_loading" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -627,25 +674,10 @@
           <object class="GtkButtonBox" id="buttonbox3">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_bottom">5</property>
+            <property name="margin_bottom">3</property>
             <property name="spacing">7</property>
             <property name="baseline_position">bottom</property>
             <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button_loading_ready">
-                <property name="label" translatable="yes">Gotowy</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="relief">half</property>
-                <signal name="clicked" handler="on_button_loading_ready_clicked" object="window_loading" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
             <child>
               <object class="GtkButton" id="button_loading_exit">
                 <property name="label" translatable="yes">Zrezygnuj</property>
@@ -658,7 +690,7 @@
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
@@ -714,6 +746,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="xalign">0.47999998927116394</property>
                 <signal name="clicked" handler="on_button_start_connect_clicked" object="window_start" swapped="no"/>
               </object>
               <packing>

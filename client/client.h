@@ -10,7 +10,7 @@ typedef struct {
     GtkButton *button_exit;
 } ClientWindow;
 
-int client_run(GtkBuilder *builder);
+int client_run(GtkBuilder *builder, int id);
 
 
 #endif	/* CLIENT_H */

@@ -30,8 +30,10 @@ int start_run(GtkBuilder *builder) {
         fprintf(stderr, "Error getting object from file.");
         return -1;
     }
+/*
     wind.button_start = GTK_BUTTON (gtk_builder_get_object (builder, "window_button_start"));
     wind.button_exit = GTK_BUTTON (gtk_builder_get_object (builder, "window_button_exit"));
+*/
 
     gtk_builder_connect_signals( builder, &wind );
     g_signal_connect (window, "destroy", G_CALLBACK (on_window_start_destroy), window);

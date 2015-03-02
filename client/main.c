@@ -6,7 +6,7 @@
 #include "client.h"
 #include "loading.h"
 
-int main (int argc, char *argv[]) {
+int main (int argc, char** argv) {
     GtkBuilder *builder;
     gtk_init (&argc, &argv);
 
@@ -21,8 +21,8 @@ int main (int argc, char *argv[]) {
     ret = start_run(builder);
     if (ret == 1) {
         ret = loading_run(builder);
-        if(ret == 1)
-            client_run(builder);
+        if(ret > 0)
+            client_run(builder, ret);
     }
     
     g_object_unref(G_OBJECT(builder));
