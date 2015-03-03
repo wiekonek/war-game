@@ -1,7 +1,8 @@
 #ifndef MSG_H
 #define	MSG_H
 
-#define KEY_ID 66
+#define KEY_ID1 66
+#define KEY_ID2 67
 
 typedef struct msginitbuf {
 long mtype;     // player number

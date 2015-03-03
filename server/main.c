@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     
     
     printf("Serwer działa.\n");
-    id_queue = msgget( KEY_ID, IPC_CREAT | 0666 );
+    id_queue = msgget( KEY_ID1, IPC_CREAT | 0666 );
     
     snd.mtype = 1;
     for(i = 1; i < 3; i++) {
@@ -37,22 +37,30 @@ int main(int argc, char** argv) {
         }  
     }
 */
-    printf("Zaczynamy grę.");
+    printf("Zaczynamy grę.\n");
     msgctl(id_queue, IPC_RMID, NULL);
     
     
-    int shmid = 0;
+    
+    
+    int shmid = 0, msgid = 0;
     shmid = shmget ( SHMEM_KEY, sizeof(Data), IPC_CREAT | 0666);
-    pid_t pID;
-    
-    pID = fork();
-    if ( pID ) {    //mechanika
-        mechanics(shmid);
-    } else {        //komunikacja z klientami
-        communication(shmid);
+    if ( -1 == (msgid = msgget ( KEY_ID2, IPC_CREAT | 0666 )) ) {
+        perror("Main queue");
+        exit(1);
     }
-
+    Data *data;
+    data = shmat(shmid, 0, 0);
     
+    
+    if ( fork() ) {    //mechanika
+        mechanics(data);
+    } else {        //komunikacja z klientami
+        communication(data, msgid);
+    }
+    
+    //shmctl(shmid, IPC_RMID, NULL);
+    //msgctl(msgid, IPC_RMID, NULL);
     return (0);
 }
 
