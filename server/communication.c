@@ -4,69 +4,57 @@
 #include "msg.h"
 #include "shm.h"
 
-void wait(int i) {
-    clock_t trigger = i * 1000;
-    int msec = 0;
-    clock_t start = clock();
-    while ( msec < trigger ) {
-        clock_t difference = clock() - start;
-        msec = difference * 1000 / CLOCKS_PER_SEC;
-    }
-}
-
 void add_worker(Data *data, int num) {
-    wait(2);
+    sleep(2);
     (data->workers[num])++;
 }
 
 void add_ls(Data *data, int num) {
-    wait(3);
+    sleep(3);
     (data->light_soldiers[num])++;
 }
 
 void add_hs(Data *data, int num) {
-    wait(3);
+    sleep(3);
     (data->heavy_soldiers[num])++;
 }
 
 void add_cavalry(Data *data, int num) {
-    wait(5);
+    sleep(5);
     (data->cavalry[num])++;
 }
 void client(int num, Data *data, int smgid) {
-    printf("Dupa\n");
-    //Data *data;
-    //data = shmat( shmid, 0, 0);
-    //perror("Shm attach");
-    printf("Workers: %d\n", data->workers[num]);
-    printf("Dupa2\n");
+    printf("Player: %d Workers from communication 1: %d\n", num, data->workers[num]);
     Player_msg rcv;
     //msgrcv(smgid, &rcv, 6, num, 0);
-    rcv.workers = 1;
-    rcv.light_soldiers = 0;
-    rcv.heavy_soldiers = 0;
-    rcv.cavalry = 0;
-    
-    if(rcv.workers)
-        add_worker(data, num);
-    if(rcv.light_soldiers)
-        add_ls(data, num);
-    if(rcv.heavy_soldiers)
-        add_hs(data, num);
-    if(rcv.cavalry)
-        add_cavalry(data, num);
-    printf("Workers: %d\n", data->workers[num]);
-    //shmdt(data);
+    rcv.data[2] = 1;
+    rcv.data[3] = 0;
+    rcv.data[4] = 0;
+    rcv.data[5] = 0;
+    int i;
+    for(i = 2; i < 6; i++)
+        if(rcv.data[i])
+            switch(i){
+                case 2:     add_worker(data, num);      break;
+                case 3:     add_ls(data, num);          break;
+                case 4:     add_hs(data, num);          break;
+                case 5:     add_cavalry(data, num);     break;
+                    
+            }
+
+    printf("Player: %d Workers from communication 2: %d\n", num, data->workers[num]);
 }
 
 void communication(Data *data, int msgid) {
     
     printf("Komunikacja z klientami.\n");
-    
-    if(fork()) {
+    pid_t pid = fork();
+    if( pid ) {
+        client(0, data, msgid);
+        wait(NULL);
+        printf("Koniec komunikacji.\n");
+    } else { // proces potomny
+        sleep(2);
         client(1, data, msgid);
-    } else {
-        client(2, data, msgid);
     }
-        
 }

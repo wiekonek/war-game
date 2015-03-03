@@ -3,6 +3,7 @@
 
 #include <sys/types.h>
 #include <sys/ipc.h>
+#include <sys/sem.h>
 #include <sys/msg.h>
 #include <unistd.h>
 
@@ -10,6 +11,8 @@
 #include "shm.h"
 #include "mechanics.h"
 #include "communication.h"
+
+#define KEY_SEM 16
 
 int main(int argc, char** argv) {
     int i = 0;
@@ -37,30 +40,50 @@ int main(int argc, char** argv) {
         }  
     }
 */
-    printf("Zaczynamy grę.\n");
+
     msgctl(id_queue, IPC_RMID, NULL);
     
     
     
+    printf("Zaczynamy grę. Inicjalizowanie: kolejka, pamięć, semafory.\n");  
     
-    int shmid = 0, msgid = 0;
-    shmid = shmget ( SHMEM_KEY, sizeof(Data), IPC_CREAT | 0666);
-    if ( -1 == (msgid = msgget ( KEY_ID2, IPC_CREAT | 0666 )) ) {
-        perror("Main queue");
+    int shmid = 0, msgid = 0, semid = 0;
+    
+    if( -1 == (shmid = shmget ( SHMEM_KEY, sizeof(Data), IPC_CREAT | 0666)) ){
+        perror("Shared memory");
         exit(1);
     }
+    
+    if( -1 == (msgid = msgget ( KEY_ID2, IPC_CREAT | 0666 )) ){
+        perror("Main queue");
+        shmctl(shmid, IPC_RMID, NULL);
+        exit(1);
+    }
+    
+    if( -1 == (semid = semget ( KEY_SEM, 1, IPC_CREAT )) ){
+        perror("Main queue");
+        shmctl(shmid, IPC_RMID, NULL);
+        msgctl(msgid, IPC_RMID, NULL);
+        exit(1);
+    }
+
     Data *data;
     data = shmat(shmid, 0, 0);
-    
+
     
     if ( fork() ) {    //mechanika
         mechanics(data);
-    } else {        //komunikacja z klientami
+        wait(NULL);
+        printf("Cleaning.");
+        shmctl(shmid, IPC_RMID, NULL);
+        msgctl(msgid, IPC_RMID, NULL);
+        semctl(semid, 0, IPC_RMID, NULL);
+    } else {        //komunikacja z klientami, proces potomny
         communication(data, msgid);
     }
     
-    //shmctl(shmid, IPC_RMID, NULL);
-    //msgctl(msgid, IPC_RMID, NULL);
+    
+
     return (0);
 }
 

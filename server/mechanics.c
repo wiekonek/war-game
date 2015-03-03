@@ -8,9 +8,7 @@
 void init_players(Data *data) {
     int i = 0;
     for(i = 0; i < 2; i++) {
-        printf("przed dostępem\n");
         data->resources[i] = 300;
-        printf("po_dostpeie\n");
         data->workers[i] = 0;
         data->light_soldiers[i] = 0;
         data->heavy_soldiers[i] = 0;
@@ -36,20 +34,13 @@ void itteration(Data *data) {
 }
 
 void loop(Data *data) {
-    printf("loop\n");
+    printf("Loop\n");
     init_players(data);
-    printf("init\n");
     int i = 0;
-    clock_t trigger = 1000;
+    
     while(666) {
         i++;
-        int msec = 0;
-        clock_t start = clock();
-        while ( msec < trigger ) {
-          clock_t difference = clock() - start;
-          msec = difference * 1000 / CLOCKS_PER_SEC;
-        }
-        printf("in_loop\n");
+        sleep(1);
         itteration(data);
         printf("Gracz 1: %d, gracz 2: %d\n", data->resources[0], data->resources[1]);
         
@@ -57,7 +48,7 @@ void loop(Data *data) {
         
         
         
-        if(i>=30) {
+        if(i>=10) {
             break;
         }
     }
@@ -66,10 +57,5 @@ void loop(Data *data) {
 
 void mechanics(Data *data) {
     printf("Mechanika gry : )\n");
-    //Data *data;
-    
-    //data = shmat( shmid, 0, 0);
     loop(data);
-   
-    //shmdt(data);
 }

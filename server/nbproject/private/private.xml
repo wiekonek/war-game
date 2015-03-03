@@ -9,6 +9,7 @@
         <group>
             <file>file:/home/wiekonek/NetBeansProjects/war-game/server/mechanics.h</file>
             <file>file:/home/wiekonek/NetBeansProjects/war-game/server/communication.h</file>
+            <file>file:/home/wiekonek/NetBeansProjects/war-game/server/shm.c</file>
             <file>file:/home/wiekonek/NetBeansProjects/war-game/server/msg.h</file>
             <file>file:/home/wiekonek/NetBeansProjects/war-game/server/shm.h</file>
             <file>file:/home/wiekonek/NetBeansProjects/war-game/server/main.c</file>
