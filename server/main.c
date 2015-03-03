@@ -5,6 +5,7 @@
 #include <sys/ipc.h>
 #include <sys/sem.h>
 #include <sys/msg.h>
+#include <sys/shm.h>
 #include <unistd.h>
 
 #include "msg.h"
@@ -15,12 +16,11 @@
 #define KEY_SEM 16
 
 int main(int argc, char** argv) {
-    int i = 0;
-    int id_queue = 0;
-    ID_msg rcv, snd;
+
     
     
     printf("Serwer działa.\n");
+    /*
     id_queue = msgget( KEY_ID1, IPC_CREAT | 0666 );
     
     snd.mtype = 1;
@@ -39,11 +39,11 @@ int main(int argc, char** argv) {
             perror("Rcv");
         }  
     }
-*/
+
 
     msgctl(id_queue, IPC_RMID, NULL);
     
-    
+    */
     
     printf("Zaczynamy grę. Inicjalizowanie: kolejka, pamięć, semafory.\n");  
     
@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
         exit(1);
     }
     
-    if( -1 == (msgid = msgget ( KEY_ID2, IPC_CREAT | 0666 )) ){
+    if( -1 == (msgid = msgget ( KEY_MSG, IPC_CREAT | 0666 )) ){
         perror("Main queue");
         shmctl(shmid, IPC_RMID, NULL);
         exit(1);
@@ -68,8 +68,8 @@ int main(int argc, char** argv) {
     }
 
     Data *data;
-    data = shmat(shmid, 0, 0);
-
+    data = (Data*)shmat(shmid, 0, 0);
+    data->cavalry[1]=0;
     
     if ( fork() ) {    //mechanika
         mechanics(data);

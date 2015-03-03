@@ -67,17 +67,17 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/server: ${OBJECTFILES}
 ${OBJECTDIR}/communication.o: communication.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I/usr/include/sys/types.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/communication.o communication.c
+	$(COMPILE.c) -g -Wall -I/usr/include/sys/types.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/communication.o communication.c
 
 ${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I/usr/include/sys/types.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -g -Wall -I/usr/include/sys/types.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 ${OBJECTDIR}/mechanics.o: mechanics.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -I/usr/include/sys/types.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mechanics.o mechanics.c
+	$(COMPILE.c) -g -Wall -I/usr/include/sys/types.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mechanics.o mechanics.c
 
 # Subprojects
 .build-subprojects:

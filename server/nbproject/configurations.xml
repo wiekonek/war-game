@@ -45,6 +45,7 @@
           <incDir>
             <pElem>/usr/include/sys/types.h</pElem>
           </incDir>
+          <warningLevel>2</warningLevel>
         </cTool>
         <linkerTool>
           <linkerAddLib>
