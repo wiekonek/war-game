@@ -32,6 +32,10 @@ typedef struct msgplayerbuf {
  * Nietypowa wiadomość z serwera:
  *  wiadomości startowe
  *  przerwanie gry [-1 0 0 0 0 0]
+ *  wygrales walke [3 X X X X X]
+ *  przegrales walke [4 X X X X X]
+ *  wygrales [5 X X X X X]
+ *  przegrales [6 X X X X X]
  */
 
 #endif	/* MSG_H */
