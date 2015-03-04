@@ -26,10 +26,11 @@ typedef struct msgplayerbuf {
  *  mtype = 3;  (mtype = 3,4)
  *  data = {2 2344 4 5 6 7 } (2 na pierwszym miejscu oznacza, że w grze dalej jest 2 graczy,
  *  nastepne wartosci opisuja ilosc surowców i jednostek)
- * Nietypowe wiadomości od klienta:
+ * Nietypowe wiadomości od gracza:
  *  pierwsza wiadomość [0 0 0 0 0 0]
  *  rezygnacja [-1 0 0 0 0 0]
- * Nietypowa wiadomość z serwera:
+ *  walka [2 1 0 0 0 0]
+ * Nietypowe wiadomości z serwera:
  *  wiadomości startowe
  *  przerwanie gry [-1 0 0 0 0 0]
  *  wygrales walke [3 X X X X X]
