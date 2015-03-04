@@ -5,6 +5,7 @@
 #include "start.h"
 #include "client.h"
 #include "loading.h"
+#include "msg.h"
 
 int main (int argc, char** argv) {
     GtkBuilder *builder;

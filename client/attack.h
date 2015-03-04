@@ -1,5 +1,5 @@
-#ifndef CLIENT_H
-#define	CLIENT_H
+#ifndef ATTACK_H
+#define	ATTACK_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,8 +11,7 @@ typedef struct {
     GtkButton *button_exit;
 } ClientWindow;
 
-int client_run(GtkBuilder *builder, int id);
+int attack_run(GtkBuilder *builder, int id);
 
-
-#endif	/* CLIENT_H */
+#endif	/* ATTACK_H */
 

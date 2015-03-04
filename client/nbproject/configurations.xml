@@ -4,8 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>attack.h</itemPath>
       <itemPath>client.h</itemPath>
       <itemPath>loading.h</itemPath>
+      <itemPath>msg.h</itemPath>
       <itemPath>start.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -15,6 +17,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>attack.c</itemPath>
       <itemPath>client.c</itemPath>
       <itemPath>loading.c</itemPath>
       <itemPath>main.c</itemPath>
@@ -65,6 +68,10 @@
           <commandLine>`pkg-config --cflags --libs gtk+-3.0` -export-dynamic</commandLine>
         </linkerTool>
       </compileType>
+      <item path="attack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="attack.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="client.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="client.h" ex="false" tool="3" flavor2="0">
@@ -74,6 +81,8 @@
       <item path="loading.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="msg.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="start.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -100,6 +109,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="attack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="attack.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="client.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="client.h" ex="false" tool="3" flavor2="0">
@@ -109,6 +122,8 @@
       <item path="loading.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="msg.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="start.c" ex="false" tool="0" flavor2="0">
       </item>

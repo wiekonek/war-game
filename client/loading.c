@@ -4,10 +4,6 @@ int id_queue = 0;
 int ID = 0;
 LoadingWindow wind;
 
-void clening() {
-    exit(1);
-}
-
 void on_window_loading_destroy (GtkWidget *object, gpointer user_data) {
     gtk_main_quit();
     if( msgctl(id_queue, IPC_RMID, NULL) == -1 ) {
@@ -28,30 +24,36 @@ void on_button_loading_exit_clicked(GtkWidget *object, gpointer user_data) {
 }
 
 void start(gpointer label) {
-    int retty;
-    ID_msg snd, rcv;
-    snd.mtype = 1;
-    snd.id = 0;
-    rcv.mtype = 2;
-    rcv.id = 0;
+    int msgid;
+    Player_msg msg;
 
-    id_queue = msgget( KEY_ID, 0777);
-    if( id_queue < 1 ) {
-        perror("Setting up queue");
+
+    msgid = msgget( KEY_MSG, 0666);
+    if( msgid == -1 ) {
+        perror("Setting up init queue");
         g_print("Server isn't available.");
         exit(1);
     }
-    g_print("Queue ID: %d\n", id_queue);
-    
-    if( msgsnd(id_queue, &snd, 1, 0) == -1 ) {
-        perror("Sending");
+    g_print("Queue ID: %d\n", msgid);
+       
+    if ( msgrcv(msgid, &msg, 6, 5, 0) == -1 ) {
+        perror("first msg rcv");
         exit(1);
-    }    
-    g_print("Message send.\n");
+    }
     
-    msgrcv(id_queue, &rcv, 1, 2, 0);
-    g_print("ID: %d\n", rcv.id);
-    ID = rcv.id;
+    
+    g_print("ID: %d\n", msg.data[0]);
+    ID = msg.data[0];
+    
+    msg.mtype=ID;
+    int i;
+    for(i = 0; i < 6; i++) {
+        msg.data[i];
+    }
+    
+    if ( msgsnd(msgid, &msg, 6, 0)) {
+        
+    }
     
     if(ID == 1)
         gtk_label_set_text(label, "Twoje ID to: 1\n Oczekiwanie na drugiego gracza.");
@@ -80,6 +82,7 @@ int loading_run(GtkBuilder *builder) {
     
     gtk_widget_show (window);
     g_timeout_add ( 1000, G_CALLBACK (start), wind.label);
+    //funkcja musi zwrócić jedynkę by zostałą wykonana kolejny raz
     
     
     gtk_main ();
