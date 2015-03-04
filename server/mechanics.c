@@ -1,9 +1,11 @@
 #include "mechanics.h"
 #include <stdio.h>
+#include <unistd.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include <sys/msg.h>
 #include <sys/sem.h>
+#include <sys/wait.h>
 #include <time.h>
 
 void init_players(Data *data) {
@@ -43,6 +45,7 @@ void update_client(Data *data, int msgid, int player) {
     msg.data[3] = data->light_soldiers[player];
     msg.data[4] = data->heavy_soldiers[player];
     msg.data[5] = data->cavalry[player];
+    msgsnd(msgid, &msg, 6, 0);
 }
 
 void update_clients(Data *data, int msgid) {
@@ -52,27 +55,16 @@ void update_clients(Data *data, int msgid) {
 }
 
 void loop(Data *data, int msgid) {
-    
     printf("Loop\n");
     init_players(data);
-    int i = 0;
-    
+    update_clients(data, msgid);
     while(666) {
-        i++;
         sleep(1);
         itteration(data);
+        update_clients(data, msgid);
         printf("Gracz 1: %d, gracz 2: %d\n", data->resources[0], data->resources[1]);
-        
-        
-        
-        
-        
-        if(i>=10) {
-            break;
-        }
     }
 }
-
 
 void mechanics(Data *data, int msgid) {
     printf("Mechanika gry : )\n");

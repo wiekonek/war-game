@@ -1,9 +1,13 @@
 #include "attack.h"
 
+void on_window_attack_destroy (GtkWidget *object, gpointer user_data) {
+    gtk_main_quit();
+}
+
 int attack_run(GtkBuilder *builder, int id) {
 
     GtkWidget *window;
-    ClientWindow wind;
+    AttackWindow wind;
     
     window = GTK_WIDGET (gtk_builder_get_object (builder, "window_game"));
     if(window == NULL) {
@@ -12,7 +16,7 @@ int attack_run(GtkBuilder *builder, int id) {
     }
     
     gtk_builder_connect_signals( builder, &wind );
-    g_signal_connect (window, "destroy", G_CALLBACK (on_window_game_destroy), window);
+    g_signal_connect (window, "destroy", G_CALLBACK (on_window_attack_destroy), window);
 
     gtk_widget_show (window);       
     gtk_main ();

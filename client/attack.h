@@ -7,9 +7,8 @@
 #include "msg.h"
 
 typedef struct {
-    GtkButton *button_start;
-    GtkButton *button_exit;
-} ClientWindow;
+    GtkButton *button_attack;
+} AttackWindow;
 
 int attack_run(GtkBuilder *builder, int id);
 
