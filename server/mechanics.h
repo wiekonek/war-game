@@ -2,8 +2,9 @@
 #define	MECHANICS_H
 
 #include "shm.h"
+#include "msg.h"
 
-void mechanics(Data *data);
+void mechanics(Data *data, int msgid);
 
 #endif	/* MECHANICS_H */
 

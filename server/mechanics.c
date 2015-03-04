@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
+#include <sys/msg.h>
+#include <sys/sem.h>
 #include <time.h>
-#include "shm.h"
 
 void init_players(Data *data) {
     int i = 0;
@@ -33,7 +34,25 @@ void itteration(Data *data) {
     }
 }
 
-void loop(Data *data) {
+void update_client(Data *data, int msgid, int player) {
+    Player_msg msg;
+    msg.mtype = player+2;
+    msg.data[0] = 2;
+    msg.data[1] = data->resources[player];
+    msg.data[2] = data->workers[player];
+    msg.data[3] = data->light_soldiers[player];
+    msg.data[4] = data->heavy_soldiers[player];
+    msg.data[5] = data->cavalry[player];
+}
+
+void update_clients(Data *data, int msgid) {
+    int i;
+    for( i = 1; i < 2; i++)
+        update_client(data, msgid, i);
+}
+
+void loop(Data *data, int msgid) {
+    
     printf("Loop\n");
     init_players(data);
     int i = 0;
@@ -55,7 +74,7 @@ void loop(Data *data) {
 }
 
 
-void mechanics(Data *data) {
+void mechanics(Data *data, int msgid) {
     printf("Mechanika gry : )\n");
-    loop(data);
+    loop(data, msgid);
 }

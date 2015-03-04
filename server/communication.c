@@ -1,8 +1,10 @@
 #include "communication.h"
 #include <stdio.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/msg.h>
+#include <sys/sem.h>
 #include <time.h>
-#include "msg.h"
-#include "shm.h"
 
 void add_worker(Data *data, int num) {
     sleep(2);
