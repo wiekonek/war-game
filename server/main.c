@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     int i;
     Player_msg msg;
     
-    printf("Serwer działa.\nInicializowanie: kolejka.");    
+    printf("Serwer działa.\nInicializowanie: kolejka.\n");    
     
     if( -1 == (msgid = msgget ( KEY_MSG, IPC_CREAT | 0666 )) ){
         perror("Main queue");
@@ -32,18 +32,26 @@ int main(int argc, char** argv) {
     for(i = 1; i < 3; i++) {
         msg.data[0] = i;
         if( msgsnd(msgid, &msg, 6, 0) == -1 ) {
-            perror("msgsnd: start message");
+            perror("msgsnd: init players");
         } 
     }
     
     for(i = 1; i < 3; i++) {
         if( msgrcv(msgid, &msg, 6, i, 0) == -1 ) {
-            perror("msgsnd: start message");
+            perror("msgrcv: info from clients");
         } 
-        printf("Player ID=%d ready.", i);
+        printf("Player ID=%d ready.\n", i);
     }
     
-    printf("Zaczynamy grę. Inicjalizowanie: pamięć, semafory.\n");  
+    printf("Zaczynamy grę. Inicjalizowanie: pamięć, semafory.\n");
+    for(i = 1; i < 3; i++) {
+        msg.mtype = i + 2;
+        msg.data[0] = 2;
+        if( msgsnd(msgid, &msg, 6, 0) == -1 ) {
+            perror("msgsnd: start game");
+        } 
+    }
+    
 
     if( -1 == (shmid = shmget ( SHMEM_KEY, sizeof(Data), IPC_CREAT | 0666)) ){
         perror("Shared memory");
