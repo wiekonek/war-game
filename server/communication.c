@@ -10,29 +10,42 @@
 #include "mechanics.h"
 
 void add_worker(Data *data, int num) {
-    sleep(2);
-    (data->workers[num])++;
+    if( data->resources[num] >= 150 ) {
+        data->resources[num] = data->resources[num]-150;
+        sleep(2);
+        (data->workers[num])++;
+    }
 }
 
 void add_ls(Data *data, int num) {
-    sleep(3);
-    (data->light_soldiers[num])++;
+    if( data->resources[num] >= 100 ) {
+        data->resources[num] = data->resources[num]-100;
+        sleep(2);
+        (data->light_soldiers[num])++;
+    }
 }
 
 void add_hs(Data *data, int num) {
-    sleep(3);
-    (data->heavy_soldiers[num])++;
+    if( data->resources[num] >= 250 ) {
+        data->resources[num] = data->resources[num]-250;
+        sleep(3);
+        (data->heavy_soldiers[num])++;
+    }
 }
 
 void add_cavalry(Data *data, int num) {
-    sleep(5);
-    (data->cavalry[num])++;
+    if( data->resources[num] >= 550 ) {
+        data->resources[num] = data->resources[num]-550;
+        sleep(5);
+        (data->cavalry[num])++;
+    }
 }
 
 void rec(Player_msg msg, Data *data, int num) {
     int i;
+    num--;
     for(i = 2; i < 6; i++)
-        if(msg.data[i])
+        if(msg.data[i] == 1)
             switch(i){
                 case 2:     add_worker(data, num);      break;
                 case 3:     add_ls(data, num);          break;
@@ -49,7 +62,7 @@ void end_game(Data *data, int msgid, int num) {
     else
         snd.mtype = 3;
     snd.data[0] = -1;
-    if ( msgsnd(msgid, &snd, 6, 0) == -1 ) {
+    if ( msgsnd(msgid, &snd, sizeof(Player_msg)-sizeof(long), 0) == -1 ) {
         perror("msgsnd(): end game");
     }
     data->game = 0;
@@ -61,7 +74,7 @@ void battle(Player_msg msg, Data *data, int num) {
 void client(int num, Data *data, int msgid) {
     Player_msg rcv;
     while(data->game) {
-        if ( msgrcv(msgid, &rcv, 6, num, IPC_NOWAIT) != -1 ) {
+        if ( msgrcv(msgid, &rcv, sizeof(Player_msg)-sizeof(long), num, IPC_NOWAIT) != -1 ) {
             switch(rcv.data[0]) {
                 case -1:    end_game(data, msgid, num);     break;
                 case 2:     rec(rcv, data, num);          break;
@@ -76,10 +89,10 @@ void communication(Data *data, int msgid) {
     printf("Komunikacja z klientami.\n");
     pid_t pid = fork();
     if( pid ) {
-        client(0, data, msgid);
+        client(1, data, msgid);
         wait(NULL);
         printf("Koniec komunikacji.\n");
     } else { // proces potomny
-        client(1, data, msgid);
+        client(2, data, msgid);
     }
 }

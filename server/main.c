@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     int i;
     Player_msg msg;
     
-    printf("Serwer działa.\nInicializowanie: kolejka.\n");    
+    printf("Serwer działa.\nInicializowanie: kolejka. \n");    
     
     if( -1 == (msgid = msgget ( KEY_MSG, IPC_CREAT | 0666 )) ){
         perror("Main queue");
@@ -31,15 +31,16 @@ int main(int argc, char** argv) {
     msg.mtype = 5;
     for(i = 1; i < 3; i++) {
         msg.data[0] = i;
-        if( msgsnd(msgid, &msg, 6, 0) == -1 ) {
+        if( msgsnd(msgid, &msg, sizeof(Player_msg)-sizeof(long), 0) == -1 ) {
             perror("msgsnd: init players");
         } 
     }
     
     for(i = 1; i < 3; i++) {
-        if( msgrcv(msgid, &msg, 6, i, 0) == -1 ) {
+        if( msgrcv(msgid, &msg, sizeof(Player_msg)-sizeof(long), i, 0) == -1 ) {
             perror("msgrcv: info from clients");
-        } 
+        }
+        printf("Info. msg: %d %d %d %d %d %d\n", msg.data[0], msg.data[1], msg.data[2], msg.data[3], msg.data[4], msg.data[5]);
         printf("Player ID=%d ready.\n", i);
     }
     
@@ -47,7 +48,7 @@ int main(int argc, char** argv) {
     for(i = 1; i < 3; i++) {
         msg.mtype = i + 2;
         msg.data[0] = 2;
-        if( msgsnd(msgid, &msg, 6, 0) == -1 ) {
+        if( msgsnd(msgid, &msg, sizeof(Player_msg)-sizeof(long), 0) == -1 ) {
             perror("msgsnd: start game");
         } 
     }

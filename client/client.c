@@ -13,7 +13,7 @@ GtkWidget *game;
     
 void on_window_game_destroy (GtkWidget *object, gpointer user_data) {
     snd.data[0] = -1;
-    if( msgsnd(msgid, &snd, 6, 0) == -1) {
+    if( msgsnd(msgid, &snd, sizeof(Player_msg)-sizeof(long), 0) == -1) {
         perror("msgsnd(): Deleting msg");
     }           
     gtk_main_quit();
@@ -56,7 +56,7 @@ void end_game() {
 }
 
 int update (gpointer nie_wiem) {
-    if ( msgrcv(msgid, &rcv, 6, ID+2, IPC_NOWAIT) != -1 ) {
+    if ( msgrcv(msgid, &rcv, sizeof(Player_msg)-sizeof(long), ID+2, IPC_NOWAIT) != -1 ) {
         switch(rcv.data[0]) {
             case -1: end_game();        break;
             case 2: refresh_labels();   break;
@@ -71,6 +71,54 @@ int update (gpointer nie_wiem) {
     return 1;
 
 
+}
+
+void send_msg() {
+    snd.data[0] = 2;
+    g_print("Co ja bym tutaj chciał: %d %d %d %d %d %d", snd.data[0], snd.data[1], snd.data[2], snd.data[3], snd.data[4], snd.data[5]);
+    if ( msgsnd(msgid, &snd, sizeof(Player_msg)-sizeof(long), 0) ) {
+        perror("msgsnd(): rec");
+    }
+}
+
+void on_button_rec1_clicked(GtkWidget *object, gpointer user_data) {
+    int i;
+    for(i = 2; i < 6; i++)
+        snd.data[i] = 0;
+    snd.data[2] = 1;
+    send_msg();
+}
+
+void on_button_rec2_clicked(GtkWidget *object, gpointer user_data) {
+    int i;
+    for(i = 2; i < 6; i++)
+        snd.data[i] = 0;
+    snd.data[3] = 1;
+    send_msg();
+}
+
+void on_button_rec3_clicked(GtkWidget *object, gpointer user_data) {
+    int i;
+    for(i = 2; i < 6; i++)
+        snd.data[i] = 0;
+    snd.data[4] = 1;
+    send_msg();
+}
+
+void on_button_rec4_clicked(GtkWidget *object, gpointer user_data) {
+    int i;
+    for(i = 2; i < 6; i++)
+        snd.data[i] = 0;
+    snd.data[5] = 1;
+    send_msg();
+}
+
+void on_button_attack_clicked(GtkWidget *object, gpointer user_data) {
+    
+}
+
+void on_button_exit_clicked(GtkWidget *object, gpointer user_data) {
+    end_game();
 }
 
 int client_run(GtkBuilder *builder, int id) {

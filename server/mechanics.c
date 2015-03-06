@@ -46,7 +46,7 @@ void update_client(Data *data, int msgid, int player) {
     msg.data[3] = data->light_soldiers[player];
     msg.data[4] = data->heavy_soldiers[player];
     msg.data[5] = data->cavalry[player];
-    msgsnd(msgid, &msg, 6, 0);
+    msgsnd(msgid, &msg, sizeof(Player_msg)-sizeof(long), 0);
 }
 
 void update_clients(Data *data, int msgid) {
