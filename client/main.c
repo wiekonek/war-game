@@ -19,6 +19,7 @@ int main (int argc, char** argv) {
     }
     
     int ret;
+
     ret = start_run(builder);
     if (ret == 1) {
         ret = loading_run(builder);

@@ -1,9 +1,10 @@
 #ifndef SHM_H
 #define	SHM_H
 
-#define SHMEM_KEY 10
+#define SHMEM_KEY 11
 
 typedef struct {
+    int game;
     int resources[2];
     int workers[2];
     int light_soldiers[2];

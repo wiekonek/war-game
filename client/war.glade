@@ -164,7 +164,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label2">
+              <object class="GtkLabel" id="label_resource">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">0</property>
@@ -190,7 +190,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label4">
+              <object class="GtkLabel" id="label_workers">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">0</property>
@@ -216,7 +216,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label5">
+              <object class="GtkLabel" id="label_ls">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">0</property>
@@ -242,7 +242,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label8">
+              <object class="GtkLabel" id="label_hs">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">0</property>
@@ -268,7 +268,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label10">
+              <object class="GtkLabel" id="label_cavalry">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">0</property>

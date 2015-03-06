@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
     int msgid;
     
     if( -1 == (msgid = msgget ( 666, 0666 )) ){
-        perror("Main queue");
+        perror("Queue");
         exit(1);
     }
     

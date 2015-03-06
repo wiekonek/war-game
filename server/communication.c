@@ -28,22 +28,47 @@ void add_cavalry(Data *data, int num) {
     sleep(5);
     (data->cavalry[num])++;
 }
-void client(int num, Data *data, int smgid) {
-    printf("Player: %d Workers from communication 1: %d\n", num, data->workers[num]);
+
+void rec(Player_msg msg, Data *data, int num) {
     int i;
-    Player_msg rcv;
-    while(666) {
-        msgrcv(smgid, &rcv, 6, num, 0);
-        for(i = 2; i < 6; i++)
-            if(rcv.data[i])
-                switch(i){
-                    case 2:     add_worker(data, num);      break;
-                    case 3:     add_ls(data, num);          break;
-                    case 4:     add_hs(data, num);          break;
-                    case 5:     add_cavalry(data, num);
-                }
+    for(i = 2; i < 6; i++)
+        if(msg.data[i])
+            switch(i){
+                case 2:     add_worker(data, num);      break;
+                case 3:     add_ls(data, num);          break;
+                case 4:     add_hs(data, num);          break;
+                case 5:     add_cavalry(data, num);
+            }
+}
+
+void end_game(Data *data, int msgid, int num) {
+    printf("End game.\n");
+    Player_msg snd;
+    if(num == 1) 
+        snd.mtype = 4;
+    else
+        snd.mtype = 3;
+    snd.data[0] = -1;
+    if ( msgsnd(msgid, &snd, 6, 0) == -1 ) {
+        perror("msgsnd(): end game");
     }
-    printf("Player: %d Workers from communication 2: %d\n", num, data->workers[num]);
+    data->game = 0;
+}
+
+void battle(Player_msg msg, Data *data, int num) {
+}
+
+void client(int num, Data *data, int msgid) {
+    Player_msg rcv;
+    while(data->game) {
+        if ( msgrcv(msgid, &rcv, 6, num, IPC_NOWAIT) != -1 ) {
+            switch(rcv.data[0]) {
+                case -1:    end_game(data, msgid, num);     break;
+                case 2:     rec(rcv, data, num);          break;
+                case 3:     battle(rcv, data, num);
+            }
+        }
+    }
 }
 
 void communication(Data *data, int msgid) {

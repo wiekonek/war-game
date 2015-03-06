@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
         exit(1);
     }
     
-    msg.mtype =5;
+    msg.mtype = 5;
     for(i = 1; i < 3; i++) {
         msg.data[0] = i;
         if( msgsnd(msgid, &msg, 6, 0) == -1 ) {
