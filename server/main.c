@@ -40,7 +40,6 @@ int main(int argc, char** argv) {
         if( msgrcv(msgid, &msg, sizeof(Player_msg)-sizeof(long), i, 0) == -1 ) {
             perror("msgrcv: info from clients");
         }
-        printf("Info. msg: %d %d %d %d %d %d\n", msg.data[0], msg.data[1], msg.data[2], msg.data[3], msg.data[4], msg.data[5]);
         printf("Player ID=%d ready.\n", i);
     }
     

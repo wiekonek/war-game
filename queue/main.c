@@ -9,17 +9,18 @@
 #include <stdlib.h>
 #include <sys/msg.h>
 #include <sys/types.h>
+#include <math.h>
 /*
  * 
  */
 int main(int argc, char** argv) {
-    
+
     int msgid;
-    
     if( -1 == (msgid = msgget ( 666, 0666 )) ){
         perror("Queue");
         exit(1);
     }
+    
     
     msgctl(msgid, IPC_RMID, NULL);
     printf("Queue deleted.\n");

@@ -5,6 +5,7 @@
 
 typedef struct {
     int game;
+    int wins[2];
     int resources[2];
     int workers[2];
     int light_soldiers[2];

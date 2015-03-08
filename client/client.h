@@ -17,6 +17,13 @@ typedef struct {
     GtkLabel *hs;
     GtkLabel *cavalry;
     GtkLabel *id;
+    GtkLabel *wins;
+    GtkScale *scale_ls;
+    GtkScale *scale_hs;
+    GtkScale *scale_cavalry;
+    GtkAdjustment *ad_ls;
+    GtkAdjustment *ad_hs;
+    GtkAdjustment *ad_cavalry;
 } ClientWindow;
 
 int client_run(GtkBuilder *builder, int id);

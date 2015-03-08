@@ -7,9 +7,11 @@
 
 int ID;
 int msgid;
+int wins;
 Player_msg snd, rcv;
 ClientWindow wind;
 GtkWidget *game;
+GtkBuilder *build;
     
 void on_window_game_destroy (GtkWidget *object, gpointer user_data) {
     snd.data[0] = -1;
@@ -28,31 +30,43 @@ void refresh_labels () {
         switch(i) {
             case 1:  gtk_label_set_text(wind.resources, c); break;
             case 2:  gtk_label_set_text(wind.workers, c); break;
-            case 3:  gtk_label_set_text(wind.ls, c); break;
-            case 4:  gtk_label_set_text(wind.hs, c); break;
-            case 5:  gtk_label_set_text(wind.cavalry, c); break;
+            case 3:  gtk_label_set_text(wind.ls, c); gtk_adjustment_set_upper (wind.ad_ls, rcv.data[3]);       break;
+            case 4:  gtk_label_set_text(wind.hs, c); gtk_adjustment_set_upper (wind.ad_hs, rcv.data[4]);       break;
+            case 5:  gtk_label_set_text(wind.cavalry, c); gtk_adjustment_set_upper (wind.ad_cavalry, rcv.data[5]);  break;
         }     
     }
 }
 
+void end_game() {
+    gtk_widget_destroy(game);
+}
+
 void win() {
-    
+    GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
+    GtkWidget *dialog = gtk_message_dialog_new (GTK_WINDOW(game), flags, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "Wygrałeś.");
+    gtk_dialog_run (GTK_DIALOG (dialog));
+    gtk_widget_destroy (dialog);
+    end_game();
 }
 
 void loose() {
-    
+    GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
+    GtkWidget *dialog = gtk_message_dialog_new (GTK_WINDOW(game), flags, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "Przegrałeś.");
+    gtk_dialog_run (GTK_DIALOG (dialog));
+    gtk_widget_destroy (dialog);
+    end_game();
 }
 
 void win_battle() {
-    
+    wins++;
+    char c[1];
+    sprintf(c, "%d", wins);
+    gtk_label_set_text(wind.wins, c);
+    g_print("wygrales bitwe.\n");
 }
 
 void loose_battle() {
-    
-}
-
-void end_game() {
-    gtk_widget_destroy(game);
+    g_print("Przegrales bitwe.\n");
 }
 
 int update (gpointer nie_wiem) {
@@ -65,28 +79,25 @@ int update (gpointer nie_wiem) {
             case 5: win();              break;
             case 6: loose();
         }
-    } else {
-        //perror("update: msgrcv");
     }
+    
     return 1;
-
-
 }
 
-void send_msg() {
-    snd.data[0] = 2;
-    g_print("Co ja bym tutaj chciał: %d %d %d %d %d %d", snd.data[0], snd.data[1], snd.data[2], snd.data[3], snd.data[4], snd.data[5]);
+void send_msg(int what) {
+    snd.data[0] = what;
     if ( msgsnd(msgid, &snd, sizeof(Player_msg)-sizeof(long), 0) ) {
         perror("msgsnd(): rec");
     }
 }
+
 
 void on_button_rec1_clicked(GtkWidget *object, gpointer user_data) {
     int i;
     for(i = 2; i < 6; i++)
         snd.data[i] = 0;
     snd.data[2] = 1;
-    send_msg();
+    send_msg(2);
 }
 
 void on_button_rec2_clicked(GtkWidget *object, gpointer user_data) {
@@ -94,7 +105,7 @@ void on_button_rec2_clicked(GtkWidget *object, gpointer user_data) {
     for(i = 2; i < 6; i++)
         snd.data[i] = 0;
     snd.data[3] = 1;
-    send_msg();
+    send_msg(2);
 }
 
 void on_button_rec3_clicked(GtkWidget *object, gpointer user_data) {
@@ -102,7 +113,7 @@ void on_button_rec3_clicked(GtkWidget *object, gpointer user_data) {
     for(i = 2; i < 6; i++)
         snd.data[i] = 0;
     snd.data[4] = 1;
-    send_msg();
+    send_msg(2);
 }
 
 void on_button_rec4_clicked(GtkWidget *object, gpointer user_data) {
@@ -110,11 +121,22 @@ void on_button_rec4_clicked(GtkWidget *object, gpointer user_data) {
     for(i = 2; i < 6; i++)
         snd.data[i] = 0;
     snd.data[5] = 1;
-    send_msg();
+    send_msg(2);
 }
 
 void on_button_attack_clicked(GtkWidget *object, gpointer user_data) {
+    int ls, hs, cavalry, i;
     
+    ls = gtk_range_get_value ( GTK_RANGE(wind.scale_ls) );
+    hs = gtk_range_get_value ( GTK_RANGE(wind.scale_hs) );
+    cavalry = gtk_range_get_value ( GTK_RANGE(wind.scale_cavalry) );
+    g_print("Zaatakuj\n");
+    snd.data[1] = 0;
+    snd.data[2] = 0;
+    snd.data[3] = ls;
+    snd.data[4] = hs;
+    snd.data[5] = cavalry;
+    send_msg(3);
 }
 
 void on_button_exit_clicked(GtkWidget *object, gpointer user_data) {
@@ -122,6 +144,8 @@ void on_button_exit_clicked(GtkWidget *object, gpointer user_data) {
 }
 
 int client_run(GtkBuilder *builder, int id) {
+    wins = 0;
+    build = builder;
     ID = id;
     snd.mtype = ID;
 
@@ -149,12 +173,20 @@ int client_run(GtkBuilder *builder, int id) {
     wind.hs =  GTK_LABEL (gtk_builder_get_object(builder, "label_hs"));
     wind.cavalry =  GTK_LABEL (gtk_builder_get_object(builder, "label_cavalry"));
     wind.id = GTK_LABEL (gtk_builder_get_object(builder, "label_id"));
+    wind.wins = GTK_LABEL (gtk_builder_get_object(builder, "label_wins"));
+    wind.scale_ls = GTK_SCALE (gtk_builder_get_object(builder, "scale_ls"));
+    wind.scale_hs = GTK_SCALE (gtk_builder_get_object(builder, "scale_hs"));
+    wind.scale_cavalry = GTK_SCALE (gtk_builder_get_object(builder, "scale_cavalry"));
+    wind.ad_ls = GTK_ADJUSTMENT (gtk_builder_get_object(builder, "adjustment_ls"));
+    wind.ad_hs = GTK_ADJUSTMENT (gtk_builder_get_object(builder, "adjustment_hs"));
+    wind.ad_cavalry = GTK_ADJUSTMENT (gtk_builder_get_object(builder, "adjustment_cavalry"));
+    
     
     char c[1];
     sprintf(c, "%d", id);
     gtk_label_set_text(wind.id, c);
 
-    g_timeout_add ( 10, G_CALLBACK (update), NULL);
+    g_timeout_add( 10, G_CALLBACK (update), NULL);
     
     gtk_builder_connect_signals( builder, &wind );
     g_signal_connect (game, "destroy", G_CALLBACK (on_window_game_destroy), game);

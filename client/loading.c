@@ -18,10 +18,9 @@ int end(GtkWidget* window) {
     }
 
     if ( msgrcv(msgid, &msg, sizeof(Player_msg)-sizeof(long), ID+2, IPC_NOWAIT) == -1 ) {
-        g_print("Czekam dalej.\n");
         return 1;
     } else {
-        g_print("Dostałem to!\n");
+        g_print("Zaczynamy!\n");
         gtk_widget_destroy(window);
         return 0;
     }

@@ -12,6 +12,7 @@ void init_players(Data *data) {
     data->game = 1;
     int i = 0;
     for(i = 0; i < 2; i++) {
+        data->wins[i] = 0;
         data->resources[i] = 300;
         data->workers[i] = 0;
         data->light_soldiers[i] = 0;
@@ -56,18 +57,16 @@ void update_clients(Data *data, int msgid) {
 }
 
 void loop(Data *data, int msgid) {
-    printf("Loop\n");
     init_players(data);
     update_clients(data, msgid);
     while(data->game) {
         sleep(1);
         itteration(data);
         update_clients(data, msgid);
-        printf("Gracz 1: %d, gracz 2: %d\n", data->resources[0], data->resources[1]);
     }
 }
 
 void mechanics(Data *data, int msgid) {
-    printf("Mechanika gry : )\n");
+    printf("Mechanika gry.\n");
     loop(data, msgid);
 }

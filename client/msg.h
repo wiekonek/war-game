@@ -36,7 +36,7 @@ typedef struct msgplayerbuf {
  * Nietypowe wiadomości od gracza:
  *  pierwsza wiadomość [0 0 0 0 0 0]
  *  rezygnacja [-1 0 0 0 0 0] (już w czasie gry)
- *  walka [3 0 0 0 0 0]
+ *  walka [3 0 0 X X X] (X - ilość jednostek danego typu)
  * 
  * Nietypowe wiadomości z serwera:
  *  wiadomości startowe
