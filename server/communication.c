@@ -45,7 +45,7 @@ void rec(Player_msg msg, Data *data, int num) {
     int i, j;
     num--;
     for(i = 2; i < 6; i++)
-        if(msg.data[i] == 1)
+        if(msg.data[i] > 0)
             switch(i){
                 case 2:     for(j = 0; j < msg.data[2]; j++) add_worker(data, num);      break;
                 case 3:     for(j = 0; j < msg.data[3]; j++) add_ls(data, num);          break;
@@ -103,7 +103,7 @@ void battle(Player_msg rcv, Data *data, int my_id, int msgid) {
         if(++data->wins[my_id-1] < 5) {
             snd.data[0] = 3;
             msgsnd(msgid, &snd, sizeof(Player_msg)-sizeof(long), 0);
-            printf("Wygrales bitwe. Iość Twoich wygranych: %d\n", data->wins[my_id-1]);
+            printf("ID: %d Wygrales bitwe. Iość Twoich wygranych: %d\n", my_id, data->wins[my_id-1]);
         } else {
             printf("Wygrales.\n");
             snd.data[0] = 5;
